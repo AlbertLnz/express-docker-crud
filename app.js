@@ -20,10 +20,10 @@ app.get('/', async (_req, res) => {
 })
 
 app.post('/', async (req, res) => {
-  const { name, location } = req.query
+  const { name, address } = req.body
 
   try {
-    await pool.query(`INSERT INTO schools(name, addres) VALUES ($1, $2)`, [ name, location ])
+    await pool.query(`INSERT INTO schools (name, address) VALUES ($1, $2)`, [ name, address ])
     res.status(200).send({
       message: 'Successfully added!'
     })

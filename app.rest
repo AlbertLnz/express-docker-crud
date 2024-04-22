@@ -7,5 +7,9 @@ Content-Type: application/json
 
 {
   "name": "Arthur",
-  "location": "Av Paris, 439"
+  "address": "Av Paris, 439"
 }
+
+###
+ 
+GET http://localhost:3000/setup
