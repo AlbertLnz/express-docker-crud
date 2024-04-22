@@ -11,22 +11,30 @@ app.get('/', (_req, res) => {
   res.send('Hello World!')
 })
 
-app.post('/', (req, res) => {
-  const { name, location } = req.body
+app.post('/', async (req, res) => {
+  const { name, location } = req.query
 
-  res.status(200).send({
-    message: `YOUR KEYS WERE ${name} - ${location}`
-  })
-
+  try {
+    await pool.query(`INSERT INTO schools(name, addres) VALUES ($1, $2)`, [ name, location ])
+    res.status(200).send({
+      message: 'Successfully added!'
+    })
+  } catch (error) {
+    console.log(error)
+    res.sendStatus(500)
+  }
 })
 
-app.get('/setup', async (req, res) => {
+app.get('/setup', async (_req, res) => {
   try {
     await pool.query(`CREATE TABLE schools(
       id SERIAL PRIMARY KEY,
       name VARCHAR(255),
       address VARCHAR(255)
     )`)
+    res.status(200).send({
+      message: 'Successfully created!'
+    })
   } catch (error) {
     console.log(error)
     res.sendStatus(500)
