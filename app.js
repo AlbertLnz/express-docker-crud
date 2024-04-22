@@ -7,8 +7,16 @@ const app = express()
 // Middlewares
 app.use(express.json())
 
-app.get('/', (_req, res) => {
-  res.send('Hello World!')
+app.get('/', async (_req, res) => {
+  try {
+    const data = await pool.query('SELECT * FROM schools')
+    res.status(200).send({
+      data: data.rows
+    })
+  } catch (error) {
+    console.log(error)
+    res.sendStatus(500)
+  }
 })
 
 app.post('/', async (req, res) => {
