@@ -20,6 +20,19 @@ app.post('/', (req, res) => {
 
 })
 
+app.get('/setup', async (req, res) => {
+  try {
+    await pool.query(`CREATE TABLE schools(
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255),
+      address VARCHAR(255)
+    )`)
+  } catch (error) {
+    console.log(error)
+    res.sendStatus(500)
+  }
+})
+
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`)
 })
