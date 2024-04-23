@@ -1,0 +1,12 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRESQL_USER: username
+      POSTGRESQL_PASSWORD: 123456
+  app:
+    image: express-docker-crud
+    port:
+      - 13000:3000
+      
